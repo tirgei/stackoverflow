@@ -22,7 +22,7 @@ export class Dao {
                     return;
                 }
 
-                resolve({message: 'User added successfully', user: results});
+                resolve({message: 'User registered successfully', userId: results.insertId});
             });
         })
     }

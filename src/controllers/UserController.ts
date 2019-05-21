@@ -15,7 +15,7 @@ export class UserController {
 
         this.dao.addUser(userDetails).then((result) => {
             response.status(200).json({
-                code: 200, message: result.message, user: result.user
+                code: 200, message: result.message, userId: result.userId
             });
         }).catch((error) => {
             response.status(400).json({
