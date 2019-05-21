@@ -63,8 +63,12 @@ foo@bar:~$ npm run watch-node
 
 Base URL for the local server is `http://localhost/`
 
+| **HTTP METHOD** | **URI** | **ACTION** |
+| --- | --- | --- |
+| **GET** | `api/v1` | Landing page |
+
 #### User Endpoints
 
 | **HTTP METHOD** | **URI** | **ACTION** |
 | --- | --- | --- |
-| **POST** | `dev/v1/auth/register` | Register a new user |
+| **POST** | `api/v1/auth/register` | Register a new user |
