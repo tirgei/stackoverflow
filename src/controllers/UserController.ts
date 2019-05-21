@@ -36,7 +36,8 @@ export class UserController {
                 bcrpty.compare(userDetails.password, user.password).then((match) => {
                    if (match) {
                        delete user.password;
-                       response.status(200).json({code: 200, message: 'Login successful', user: user});
+                       const accessToken = jwt.sign({id: user.id}, process.env.SECRET_KEY, {expiresIn: '24h'});
+                       response.status(200).json({code: 200, message: 'Login successful', user: user, token: accessToken});
                    } else
                        response.status(400).json({code: 404, message: 'Incorrect username or password'});
                 });
