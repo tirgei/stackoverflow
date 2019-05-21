@@ -10,7 +10,8 @@ export function validateEnv() {
         DB_NAME: str(),
         DB_PASS: str(),
         DOMAIN: str(),
-        SALT_ROUNDS: str()
+        SALT_ROUNDS: str(),
+        SECRET_KEY: str()
     };
 
     cleanEnv(process.env, variables);
