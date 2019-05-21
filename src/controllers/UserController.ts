@@ -2,6 +2,7 @@ import {Dao} from '../dao/Dao'
 import {Request, Response} from "express";
 import {IUser} from "../interfaces/IUser";
 import bcrpty from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 export class UserController {
     private dao: Dao;
@@ -11,7 +12,7 @@ export class UserController {
     }
 
     // Function to register new user
-    public registerCitizen(request: Request, response: Response) {
+    public registerUser(request: Request, response: Response) {
         const userDetails: IUser = request.body;
 
         bcrpty.hash(userDetails.password, Number(process.env.SALT_ROUNDS)).then((hash) => {
@@ -26,4 +27,24 @@ export class UserController {
         });
     }
 
+    // Function to login user
+    public loginUser(request: Request, response: Response) {
+        const userDetails: IUser = request.body;
+
+        this.dao.fetchUserByUsername(userDetails.username).then((user: IUser) => {
+            if (user) {
+                bcrpty.compare(userDetails.password, user.password).then((match) => {
+                   if (match) {
+                       delete user.password;
+                       response.status(200).json({code: 200, message: 'Login successful', user: user});
+                   } else
+                       response.status(400).json({code: 404, message: 'Incorrect username or password'});
+                });
+            } else {
+                response.status(404).json({code: 404, message: 'User not found'});
+            }
+        }).catch((error) => {
+            response.status(404).json({code: 404, message: 'User not found', debug: error});
+        });
+    }
 }
