@@ -2,7 +2,7 @@ import {Router} from "express";
 import {Dao} from '../dao/Dao';
 import {UserController} from '../controllers/UserController';
 import {validationMiddleware} from "../middleware/joi-validator";
-import {registrationSchema} from "../joi/user-schema";
+import {loginSchema, registrationSchema} from "../joi/user-schema";
 
 export class NoAuthRoutes {
     public router: Router;
@@ -26,7 +26,12 @@ export class NoAuthRoutes {
 
         // Registration url
         this.router.post('/auth/register', validationMiddleware(registrationSchema, 'body'), (req, res) => {
-            this.userController.registerCitizen(req, res);
+            this.userController.registerUser(req, res);
+        });
+
+        // Login url
+        this.router.post('/auth/login', validationMiddleware(loginSchema, 'body'), (req, res) => {
+           this.userController.loginUser(req, res);
         });
     }
 }
