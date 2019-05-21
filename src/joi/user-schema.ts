@@ -10,3 +10,9 @@ export const registrationSchema = Joi.object().keys({
     email: Joi.string().email().required(),
     phone: Joi.string().required()
 });
+
+// Joi schema for user login data
+export const loginSchema = Joi.object().keys({
+    username: Joi.string().alphanum().required(),
+    password: Joi.string().regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$/).required()
+});
