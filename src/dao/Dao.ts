@@ -27,4 +27,18 @@ export class Dao {
         })
     }
 
+    // Function to fetch specific user details
+    public fetchUserByUsername(username: string): Promise<IUser> {
+        return new Promise<IUser>((resolve, reject) => {
+            this.databaseConnection.query('SELECT * FROM `users` WHERE username = ?', [username], (err, result) => {
+                if (err) {
+                    reject({message: err.sqlMessage});
+                    return;
+                }
+
+                resolve(result[0])
+            });
+        })
+    }
+
 }
