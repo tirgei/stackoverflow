@@ -1,4 +1,4 @@
-#Stackoverflow
+# Stackoverflow
 
 This is a sample repo for the popular Q&A platform, Stackoverflow. Users can sign up/in to the platform, post and/or answer questions.
 
