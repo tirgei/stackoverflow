@@ -21,6 +21,10 @@ export class AuthRoutes {
            this.questionsController.newQuestion(req, res);
         });
 
+        // Fetch all questions
+        this.router.get('/questions', (req, res) => {
+            this.questionsController.fetchAllQuestions(req, res);
+        })
     }
 
 }
