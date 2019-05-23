@@ -22,7 +22,7 @@ export class UserController {
                 response.status(200).json({code: 200, message: result.message, userId: result.userId});
 
             }).catch((error) => {
-                response.status(400).json({code: 400, message: 'Error registering user', debug: [{error: error}]});
+                response.status(400).json({code: 400, message: 'Error registering user', debug: error});
             });
         });
     }
