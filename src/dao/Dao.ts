@@ -60,4 +60,18 @@ export class Dao {
         });
     }
 
+    // Function to fetch all questions
+    public fetchAllQuestions(): Promise<Array<IQuestion>> {
+        return new Promise<Array<IQuestion>>((resolve, reject) => {
+            this.databaseConnection.query('SELECT * FROM `questions`', (err, results, fields) => {
+               if (err) {
+                   reject({error: err.sqlMessage});
+                   return;
+               }
+
+               resolve(results);
+            });
+        })
+    }
+
 }

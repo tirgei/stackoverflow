@@ -17,8 +17,16 @@ export class QuestionController {
         this.dao.addQuestion(question).then((result) => {
            response.status(200).json({code: 200, message: result.message});
         }).catch((error) => {
-            response.status(400).json({code: 400, message: 'Error adding question', debug: error})
+            response.status(400).json({code: 400, message: 'Error adding question', debug: error});
         });
     }
 
+    // Function to fetch all questions
+    public fetchAllQuestions(request: Request, response: Response) {
+        this.dao.fetchAllQuestions().then((results) => {
+            response.status(200).json({code: 200, data: results});
+        }).catch((error) => {
+            response.status(400).json({code: 400, message: 'Error fetching questions', debug: error});
+        });
+    }
 }
