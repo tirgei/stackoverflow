@@ -61,7 +61,7 @@ foo@bar:~$ npm run watch-node
 
 ## API Endpoints
 
-Base URL for the local server is `http://localhost/`
+Base URL for the local server is `http://localhost:{port number}/`
 
 | **HTTP METHOD** | **URI** | **ACTION** |
 | --- | --- | --- |
