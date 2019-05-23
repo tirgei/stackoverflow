@@ -1,6 +1,6 @@
 # Stackoverflow
 
-This is a sample repo for the popular Q&A platform, Stackoverflow. Users can sign up/in to the platform, post and/or answer questions.
+This is a sample backend for the popular Q&A platform, StackOverflow. Users can sign up/in to the platform, post and/or answer questions.
 
 ## Prerequisites
 
@@ -24,7 +24,7 @@ foo@bar:~$ git clone https://github.com/tirgei/stackoverflow.git
 
 ```console
 foo@bar:~$ mysql -u {database username} -p
-foo@bar:~$ create database stackoverflow_db
+foo@bar:~$ create database stackoverflow_db;
 ```
 
 - CD into the project folder
@@ -72,3 +72,10 @@ Base URL for the local server is `http://localhost/`
 | **HTTP METHOD** | **URI** | **ACTION** |
 | --- | --- | --- |
 | **POST** | `api/v1/auth/register` | Register a new user |
+| **POST** | `api/v1/auth/login` | Login a user |
+
+#### Question Endpoints
+
+| **HTTP METHOD** | **URI** | **ACTION** |
+| --- | --- | --- |
+| **POST** | `api/v1/questions` | Post a question |
