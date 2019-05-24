@@ -17,7 +17,7 @@ export class Dao {
         user.modifiedAt = Date.now();
 
         return new Promise<any>((resolve, reject) => {
-            this.databaseConnection.query('INSERT INTO `users` SET ? ', user, (err, results, fields) => {
+            this.databaseConnection.query('INSERT INTO `users` SET ? ', [user], (err, results) => {
                 if (err) {
                     reject({error: err.sqlMessage});
                     return;
@@ -46,12 +46,13 @@ export class Dao {
     public addQuestion(question: IQuestion): Promise<any> {
         question.createdAt = Date.now();
         question.modifiedAt = Date.now();
-        if (question.tags) question.tags = JSON.stringify(question.tags);
+        delete question['tags'];
 
         return new Promise<any>((resolve, reject) => {
-            this.databaseConnection.query('INSERT INTO `questions` SET ? ', question, (err, results, fields) => {
+            this.databaseConnection.query('INSERT INTO `questions` SET ? ', [question], (err, results) => {
                 if (err) {
                     reject({error: err.sqlMessage});
+                    console.log(JSON.stringify(err));
                     return;
                 }
 
@@ -60,10 +61,25 @@ export class Dao {
         });
     }
 
+    // Function to save question tags
+    public addQuestionTags(questionId: number, questionTag: string) {
+        const tag = {
+            questionId: questionId,
+            tag: questionTag
+        };
+
+        this.databaseConnection.query('INSERT INTO `question_tags` SET ?', [tag], (err, results) => {
+            if (err) {
+                console.log(JSON.stringify(err));
+                return;
+            }
+        });
+    }
+
     // Function to fetch all questions
     public fetchAllQuestions(): Promise<Array<IQuestion>> {
         return new Promise<Array<IQuestion>>((resolve, reject) => {
-            this.databaseConnection.query('SELECT * FROM `questions`', (err, results, fields) => {
+            this.databaseConnection.query('SELECT * FROM `questions`', (err, results) => {
                if (err) {
                    reject({error: err.sqlMessage});
                    return;
