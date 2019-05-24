@@ -3,7 +3,6 @@ export interface IQuestion {
     title: string,
     description: string,
     userId: number,
-    tags: any,
     createdAt: any,
     modifiedAt: any
 }
