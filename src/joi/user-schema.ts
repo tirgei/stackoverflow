@@ -13,6 +13,7 @@ export const registrationSchema = Joi.object().keys({
 
 // Joi schema for user login data
 export const loginSchema = Joi.object().keys({
-    username: Joi.string().alphanum().required(),
+    username: Joi.string().alphanum(),
+    email: Joi.string().email(),
     password: Joi.string().regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$/).required()
-});
+}).or('username', 'email');
