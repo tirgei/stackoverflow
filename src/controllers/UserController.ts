@@ -31,21 +31,39 @@ export class UserController {
     public loginUser(request: Request, response: Response) {
         const userDetails: IUser = request.body;
 
-        this.dao.fetchUserByUsername(userDetails.username).then((user: IUser) => {
+        if (userDetails.email) {
+            this.dao.fetchUserByEmail(userDetails.email).then((user: IUser) => {
+                loginUser(user);
+            }).catch((error) => {
+                noUserFound(error);
+            });
+        } else  if (userDetails.username) {
+            this.dao.fetchUserByUsername(userDetails.username).then((user: IUser) => {
+                loginUser(user);
+            }).catch((error) => {
+                noUserFound(error);
+            });
+        }
+
+        // Handle response when no user is found
+        const noUserFound = (error = null) => {
+            response.status(404).json({code: 404, message: 'User not found', debug: error});
+        };
+
+        // Login user
+        const loginUser = (user: IUser) => {
             if (user) {
                 bcrpty.compare(userDetails.password, user.password).then((match) => {
-                   if (match) {
-                       delete user.password;
-                       const accessToken = jwt.sign({id: user.id}, process.env.SECRET_KEY, {expiresIn: '24h'});
-                       response.status(200).json({code: 200, message: 'Login successful', user: user, token: accessToken});
-                   } else
-                       response.status(400).json({code: 404, message: 'Incorrect username or password'});
+                    if (match) {
+                        delete user.password;
+                        const accessToken = jwt.sign({id: user.id}, process.env.SECRET_KEY, {expiresIn: '24h'});
+                        response.status(200).json({code: 200, message: 'Login successful', user: user, token: accessToken});
+                    } else
+                        response.status(400).json({code: 404, message: 'Incorrect username or password'});
                 });
             } else {
-                response.status(404).json({code: 404, message: 'User not found'});
+                noUserFound();
             }
-        }).catch((error) => {
-            response.status(404).json({code: 404, message: 'User not found', debug: error});
-        });
+        };
     }
 }
