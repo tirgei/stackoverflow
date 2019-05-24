@@ -42,6 +42,20 @@ export class Dao {
         })
     }
 
+    // Function to fetch specific user details
+    public fetchUserByEmail(email: string): Promise<IUser> {
+        return new Promise<IUser>((resolve, reject) => {
+            this.databaseConnection.query('SELECT * FROM `users` WHERE email = ?', [email], (err, result) => {
+                if (err) {
+                    reject({error: err.sqlMessage});
+                    return;
+                }
+
+                resolve(result[0])
+            });
+        })
+    }
+
     // Function to save new question record
     public addQuestion(question: IQuestion): Promise<any> {
         question.createdAt = Date.now();
