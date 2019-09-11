@@ -32,9 +32,6 @@ app.use(error_404);
 
 // Start the server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, (error: any) => {
-    if (error)
-        return console.log(`Error listening on port ${PORT}: ${error}`);
-
+app.listen(PORT, () => {
     return console.log(`Server listening on port: ${PORT}`);
 });
